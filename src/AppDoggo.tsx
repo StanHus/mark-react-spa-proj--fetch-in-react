@@ -13,7 +13,11 @@ export default function AppDog() {
       status: string
       }
       
-
+function imgEntry(image: string){
+    return (
+        <img src = {image} alt = "doggo" />
+    )
+}
 
   const getMeADog = async () => {
 
@@ -23,7 +27,6 @@ export default function AppDog() {
         const jsonBody: Doggo = await response.json();
         setDog(jsonBody)
         setCount(count+1)
-        console.log(count)
         // newPics([ ...currentPics, dog!.message])
       }
       const getMeMoreDogs = async () => {
@@ -33,17 +36,15 @@ export default function AppDog() {
         );
         const jsonBody: Doggo = await response.json();
         setDog(jsonBody)
-        setCount(count+1)
-        newPics([ ...currentPics, dog!.message])
+        newPics([dog!.message, ...currentPics])
       }
 
-
-  if (dog && count > 0){
+  if (dog && count === 1){
     return(
         <div>
           <h1>Doggo Pic App</h1>
           <button onClick = {getMeMoreDogs}> Click me to get a doggo</button>
-          <img src = {dog!.message} alt = "doggo pic" />
+          <p>{currentPics.map(imgEntry)}</p>
         </div>  
     ) 
   }
